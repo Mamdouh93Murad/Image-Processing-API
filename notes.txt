@@ -1,0 +1,13 @@
+ ## UPGRADE TO LATEST NPM AND NODEJS BEFORE STARTING
+
+	1 - npm install -g npm@latest
+
+	2 - 	* curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+     		* sudo apt-get install -y nodejs
+
+
+## TO DELETE CURRENT NODES AND REFRESH CACHE
+
+	1 - npm cache clean --force
+
+	2 - rm -rf node_modules && rm ./package-lock.json
