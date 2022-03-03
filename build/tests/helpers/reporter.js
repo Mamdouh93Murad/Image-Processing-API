@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-undef */
 var jasmine_spec_reporter_1 = require("jasmine-spec-reporter");
 var CustomProcessor = /** @class */ (function (_super) {
     __extends(CustomProcessor, _super);
@@ -31,5 +32,5 @@ jasmine.getEnv().addReporter(new jasmine_spec_reporter_1.SpecReporter({
     spec: {
         displayStacktrace: jasmine_spec_reporter_1.StacktraceOption.NONE
     },
-    customProcessors: [CustomProcessor],
+    customProcessors: [CustomProcessor]
 }));

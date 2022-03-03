@@ -1,8 +1,8 @@
 import express from 'express'
-
+import logger from '../utilities/logger'
 const routes = express.Router()
 
-routes.get('/', (req: express.Request, res: express.Response): void => {
+routes.get('/', logger, (req: express.Request, res: express.Response): void => {
   res.send('main page')
 })
 

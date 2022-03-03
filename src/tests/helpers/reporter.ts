@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 import {
   DisplayProcessor,
   SpecReporter,
   StacktraceOption
 } from 'jasmine-spec-reporter'
-import jasmine from 'jasmine'
+
 import SuiteInfo = jasmine.SuiteInfo;
 
 class CustomProcessor extends DisplayProcessor {
