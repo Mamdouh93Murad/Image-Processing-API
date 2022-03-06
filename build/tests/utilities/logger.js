@@ -39,13 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = __importDefault(require("../index"));
+var index_1 = __importDefault(require("../../index"));
 var supertest_1 = __importDefault(require("supertest"));
 var request = (0, supertest_1.default)(index_1.default);
 // eslint-disable-next-line no-undef
-describe('Test Default End Point', function () {
+describe('Test endpoint responses', function () {
     // eslint-disable-next-line no-undef
-    it('Gets Status of End Point', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('Tests End Point Status', function (done) { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -55,7 +55,26 @@ describe('Test Default End Point', function () {
                 case 1:
                     response = _a.sent();
                     // eslint-disable-next-line no-undef
+                    expect(response).toBeInstanceOf(Response);
+                    // eslint-disable-next-line no-undef
                     expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // eslint-disable-next-line no-undef
+    it('Tests Object Type ', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get('/')
+                    // eslint-disable-next-line no-undef
+                ];
+                case 1:
+                    response = _a.sent();
+                    // eslint-disable-next-line no-undef
+                    expect(response).toBeInstanceOf(Response);
+                    // eslint-disable-next-line no-undef
                     done();
                     return [2 /*return*/];
             }

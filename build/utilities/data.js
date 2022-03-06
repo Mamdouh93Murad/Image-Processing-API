@@ -39,26 +39,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = __importDefault(require("../index"));
-var supertest_1 = __importDefault(require("supertest"));
-var request = (0, supertest_1.default)(index_1.default);
-// eslint-disable-next-line no-undef
-describe('Test Default End Point', function () {
-    // eslint-disable-next-line no-undef
-    it('Gets Status of End Point', function (done) { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/')
-                    // eslint-disable-next-line no-undef
-                ];
-                case 1:
-                    response = _a.sent();
-                    // eslint-disable-next-line no-undef
-                    expect(response.status).toBe(200);
-                    done();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
+var sharp_1 = __importDefault(require("sharp"));
+var fs_1 = require("fs");
+var data = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
+    var image, width, height, metadata, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)];
+            case 1:
+                image = _a.sent();
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];
+            case 3:
+                metadata = _a.sent();
+                width = metadata.width;
+                height = metadata.height;
+                // console.log(width, height)
+                return [2 /*return*/, [width, height]];
+            case 4:
+                error_1 = _a.sent();
+                console.log("An error occurred during processing: ".concat(error_1));
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.default = data;

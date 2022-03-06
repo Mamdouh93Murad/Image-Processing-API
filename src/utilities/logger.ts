@@ -6,7 +6,7 @@ const logger = (
   next: Function
 ): void => {
   const url = req.url
-  console.log(`${url} visited`)
+  console.log(`ENDPOINT ${url} : visited`)
   next()
 }
 
