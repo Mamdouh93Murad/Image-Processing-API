@@ -16,14 +16,14 @@ describe('Test "Image" End Point', (): void => {
 })
 
 // eslint-disable-next-line no-undef
-describe('Image Functions', () : void => {
+describe('Image Functions', (): void => {
   // eslint-disable-next-line no-undef
   it('Returns the Width and Height of an Image', async () => {
     // eslint-disable-next-line no-undef
     const image = await read('fjord.jpg')
     const metadata = await sharp(image).metadata()
-    const width : number = metadata.width as number
-    const height : number = metadata.height as number
+    const width: number = metadata.width as number
+    const height: number = metadata.height as number
     // eslint-disable-next-line no-undef
     expect(width).toBe(1920)
     // eslint-disable-next-line no-undef
@@ -39,10 +39,10 @@ describe('Image Functions', () : void => {
   // eslint-disable-next-line no-undef
   it('Properly Resizes Image and Return Correct Width and Height', async () => {
     // eslint-disable-next-line no-undef
-    const image = await convert('fjord.jpg')
+    const image = await convert('fjord.jpg', 300, 300)
     const metadata = await sharp(image).metadata()
-    const width : number = metadata.width as number
-    const height : number = metadata.height as number
+    const width: number = metadata.width as number
+    const height: number = metadata.height as number
     // eslint-disable-next-line no-undef
     expect(width).toBe(300)
     // eslint-disable-next-line no-undef

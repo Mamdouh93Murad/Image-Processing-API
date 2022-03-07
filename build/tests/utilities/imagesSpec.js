@@ -111,7 +111,7 @@ describe('Image Functions', function () {
         var image, metadata, width, height;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, data_1.convert)('fjord.jpg')];
+                case 0: return [4 /*yield*/, (0, data_1.convert)('fjord.jpg', 300, 300)];
                 case 1:
                     image = _a.sent();
                     return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];

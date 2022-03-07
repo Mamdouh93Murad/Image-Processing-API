@@ -1,8 +1,8 @@
 import sharp from 'sharp'
-import { promises } from 'fs'
+import fs, { promises } from 'fs'
 
 const read = async (filename : string) => {
-  const image = await promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)
+  const image = await promises.readFile(process.cwd() + '/images/full/' + filename)
   try {
     const NewImage = await sharp(image).toBuffer()
     return NewImage
@@ -11,10 +11,13 @@ const read = async (filename : string) => {
   }
 }
 
-const convert = async (filename : string) => {
-  const image = await promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)
-  const NewImage = await sharp(image).resize(300, 300).toBuffer()
+const convert = async (filename : string, width : number, height : number) => {
+  const image = await promises.readFile(process.cwd() + '/images/full/' + filename)
+  const NewImage = await sharp(image).resize(width, height).toBuffer()
   return NewImage
 }
 
-export { read, convert }
+const save = (image : Buffer, name : string, folder : string) => {
+  fs.createWriteStream(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg').write(image)
+}
+export { read, convert, save }

@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,9 +58,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.convert = exports.read = void 0;
+exports.save = exports.convert = exports.read = void 0;
 var sharp_1 = __importDefault(require("sharp"));
-var fs_1 = require("fs");
+var fs_1 = __importStar(require("fs"));
 var read = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
     var image, NewImage, error_1;
     return __generator(this, function (_a) {
@@ -65,14 +84,14 @@ var read = function (filename) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 exports.read = read;
-var convert = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
+var convert = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var image, NewImage;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)];
             case 1:
                 image = _a.sent();
-                return [4 /*yield*/, (0, sharp_1.default)(image).resize(300, 300).toBuffer()];
+                return [4 /*yield*/, (0, sharp_1.default)(image).resize(width, height).toBuffer()];
             case 2:
                 NewImage = _a.sent();
                 return [2 /*return*/, NewImage];
@@ -80,3 +99,7 @@ var convert = function (filename) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.convert = convert;
+var save = function (image, name, folder) {
+    fs_1.default.createWriteStream('C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + folder + '/' + name + '.jpg').write(image);
+};
+exports.save = save;
