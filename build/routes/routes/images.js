@@ -46,41 +46,57 @@ var data_1 = require("../../utilities/data");
 var images = express_1.default.Router();
 var names = ['encenadaport', 'fjord', 'icelandwaterfall', 'palmtunnel', 'santamonica'];
 images.get('/image', logger_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var name, width, height, folder, image, file;
+    var name, width, height, file, folder, image, file;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 name = req.query.name;
                 width = req.query.width;
                 height = req.query.height;
-                if (!(width !== undefined)) return [3 /*break*/, 8];
-                if (!names.includes(name)) return [3 /*break*/, 7];
-                if (!fs_1.default.existsSync('C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + name + '.jpg')) return [3 /*break*/, 6];
-                folder = width;
-                console.log(folder);
-                if (!!fs_1.default.existsSync('C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + folder)) return [3 /*break*/, 2];
-                return [4 /*yield*/, fs_1.default.mkdir('C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + folder, function () { console.log('CREATED'); })];
+                if (!(width === undefined)) return [3 /*break*/, 3];
+                if (!names.includes(name)) return [3 /*break*/, 2];
+                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 2];
+                file = process.cwd() + '/images/full/' + name + '.jpg';
+                return [4 /*yield*/, res.sendFile(file)];
             case 1:
                 _a.sent();
                 _a.label = 2;
-            case 2:
-                if (!!fs_1.default.existsSync('C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + folder + '/' + name + '.jpg')) return [3 /*break*/, 5];
-                return [4 /*yield*/, (0, data_1.convert)(name + '.jpg', width, height)];
+            case 2: return [3 /*break*/, 14];
             case 3:
-                image = _a.sent();
-                return [4 /*yield*/, (0, data_1.save)(image, name, folder)];
+                if (!names.includes(name)) return [3 /*break*/, 13];
+                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 12];
+                folder = width;
+                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + folder)) return [3 /*break*/, 5];
+                return [4 /*yield*/, fs_1.default.mkdir(process.cwd() + '/images/full/' + folder, function () { console.log('CREATED'); })];
             case 4:
                 _a.sent();
                 _a.label = 5;
             case 5:
-                file = 'C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + folder + '/' + name + '.jpg';
-                res.sendFile(file);
-                _a.label = 6;
-            case 6: return [3 /*break*/, 8];
+                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg')) return [3 /*break*/, 10];
+                return [4 /*yield*/, Number(width)];
+            case 6:
+                width = _a.sent();
+                return [4 /*yield*/, Number(height)];
             case 7:
+                height = _a.sent();
+                return [4 /*yield*/, (0, data_1.convert)(name + '.jpg', width, height)];
+            case 8:
+                image = _a.sent();
+                return [4 /*yield*/, (0, data_1.save)(image, name, folder)];
+            case 9:
+                _a.sent();
+                _a.label = 10;
+            case 10:
+                file = process.cwd() + '/images/full/' + folder + '/' + name + '.jpg';
+                return [4 /*yield*/, res.sendFile(file)];
+            case 11:
+                _a.sent();
+                _a.label = 12;
+            case 12: return [3 /*break*/, 14];
+            case 13:
                 res.send('WRONG NAME');
-                _a.label = 8;
-            case 8: return [2 /*return*/];
+                _a.label = 14;
+            case 14: return [2 /*return*/];
         }
     });
 }); });

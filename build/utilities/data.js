@@ -65,7 +65,7 @@ var read = function (filename) { return __awaiter(void 0, void 0, void 0, functi
     var image, NewImage, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)];
+            case 0: return [4 /*yield*/, fs_1.promises.readFile(process.cwd() + '/images/full/' + filename)];
             case 1:
                 image = _a.sent();
                 _a.label = 2;
@@ -88,7 +88,7 @@ var convert = function (filename, width, height) { return __awaiter(void 0, void
     var image, NewImage;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)];
+            case 0: return [4 /*yield*/, fs_1.promises.readFile(process.cwd() + '/images/full/' + filename)];
             case 1:
                 image = _a.sent();
                 return [4 /*yield*/, (0, sharp_1.default)(image).resize(width, height).toBuffer()];
@@ -100,6 +100,6 @@ var convert = function (filename, width, height) { return __awaiter(void 0, void
 }); };
 exports.convert = convert;
 var save = function (image, name, folder) {
-    fs_1.default.createWriteStream('C:/Users/The Cat Father/Desktop/MEAN/DEFAULT/images/full/' + folder + '/' + name + '.jpg').write(image);
+    fs_1.default.createWriteStream(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg').write(image);
 };
 exports.save = save;

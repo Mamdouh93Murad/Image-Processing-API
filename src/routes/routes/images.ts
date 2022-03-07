@@ -28,8 +28,8 @@ images.get(
             await promises.mkdir(process.cwd() + '/images/full/' + folder, () => { console.log('CREATED') })
           }
           if (!promises.existsSync(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg')) {
-            width = Number(width)
-            height = Number(height)
+            width = await Number(width)
+            height = await Number(height)
             const image = await convert(name + '.jpg', width, height)
             await save(image, name, folder)
           }
