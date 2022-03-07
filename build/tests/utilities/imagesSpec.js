@@ -41,12 +41,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var __1 = __importDefault(require("../.."));
 var supertest_1 = __importDefault(require("supertest"));
-var fs_1 = require("fs");
 var sharp_1 = __importDefault(require("sharp"));
-var data_1 = __importDefault(require("../../utilities/data"));
+var data_1 = require("../../utilities/data");
 var request = (0, supertest_1.default)(__1.default);
-var test = (0, data_1.default)('fjord.jpg');
-console.log(test);
 // eslint-disable-next-line no-undef
 describe('Test "Image" End Point', function () {
     // eslint-disable-next-line no-undef
@@ -66,25 +63,6 @@ describe('Test "Image" End Point', function () {
             }
         });
     }); });
-    // eslint-disable-next-line no-undef
-    it('Test The Return Object/Extention of "Images" End Point', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var image, metadata;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/fjord.jpg')];
-                case 1:
-                    image = _a.sent();
-                    return [4 /*yield*/, (0, sharp_1.default)(image).metadata()
-                        // eslint-disable-next-line no-undef
-                    ];
-                case 2:
-                    metadata = _a.sent();
-                    // eslint-disable-next-line no-undef
-                    expect(metadata.format).toBe('jpeg');
-                    return [2 /*return*/];
-            }
-        });
-    }); });
 });
 // eslint-disable-next-line no-undef
 describe('Image Functions', function () {
@@ -93,7 +71,7 @@ describe('Image Functions', function () {
         var image, metadata, width, height;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/fjord.jpg')];
+                case 0: return [4 /*yield*/, (0, data_1.read)('fjord.jpg')];
                 case 1:
                     image = _a.sent();
                     return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];
@@ -110,20 +88,34 @@ describe('Image Functions', function () {
         });
     }); });
     // eslint-disable-next-line no-undef
-    it('Properly Resizes Image and Return Correct Width and Height', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var image, new_image, metadata, width, height;
+    it('Returns Proper Object/File Extension', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var image, metadata;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/fjord.jpg')
-                    // eslint-disable-next-line camelcase
-                ];
+                case 0: return [4 /*yield*/, (0, data_1.read)('fjord.jpg')];
                 case 1:
                     image = _a.sent();
-                    return [4 /*yield*/, (0, sharp_1.default)(image).resize(300, 300).toBuffer()];
+                    return [4 /*yield*/, (0, sharp_1.default)(image).metadata()
+                        // eslint-disable-next-line no-undef
+                    ];
                 case 2:
-                    new_image = _a.sent();
-                    return [4 /*yield*/, (0, sharp_1.default)(new_image).metadata()];
-                case 3:
+                    metadata = _a.sent();
+                    // eslint-disable-next-line no-undef
+                    expect(metadata.format).toBe('jpeg');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // eslint-disable-next-line no-undef
+    it('Properly Resizes Image and Return Correct Width and Height', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var image, metadata, width, height;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, data_1.convert)('fjord.jpg')];
+                case 1:
+                    image = _a.sent();
+                    return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];
+                case 2:
                     metadata = _a.sent();
                     width = metadata.width;
                     height = metadata.height;

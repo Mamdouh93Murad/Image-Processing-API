@@ -39,10 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.convert = exports.read = void 0;
 var sharp_1 = __importDefault(require("sharp"));
 var fs_1 = require("fs");
-var data = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
-    var image, width, height, metadata, error_1;
+var read = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
+    var image, NewImage, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)];
@@ -51,13 +52,10 @@ var data = function (filename) { return __awaiter(void 0, void 0, void 0, functi
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 4, , 5]);
-                return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];
+                return [4 /*yield*/, (0, sharp_1.default)(image).toBuffer()];
             case 3:
-                metadata = _a.sent();
-                width = metadata.width;
-                height = metadata.height;
-                // console.log(width, height)
-                return [2 /*return*/, [width, height]];
+                NewImage = _a.sent();
+                return [2 /*return*/, NewImage];
             case 4:
                 error_1 = _a.sent();
                 console.log("An error occurred during processing: ".concat(error_1));
@@ -66,4 +64,19 @@ var data = function (filename) { return __awaiter(void 0, void 0, void 0, functi
         }
     });
 }); };
-exports.default = data;
+exports.read = read;
+var convert = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
+    var image, NewImage;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fs_1.promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)];
+            case 1:
+                image = _a.sent();
+                return [4 /*yield*/, (0, sharp_1.default)(image).resize(300, 300).toBuffer()];
+            case 2:
+                NewImage = _a.sent();
+                return [2 /*return*/, NewImage];
+        }
+    });
+}); };
+exports.convert = convert;

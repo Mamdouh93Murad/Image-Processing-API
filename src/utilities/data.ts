@@ -1,19 +1,20 @@
 import sharp from 'sharp'
 import { promises } from 'fs'
 
-const data = async (filename : string) => {
+const read = async (filename : string) => {
   const image = await promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)
-  let width : number
-  let height : number
   try {
-    const metadata = await sharp(image).metadata()
-    width = metadata.width as number
-    height = metadata.height as number
-    // console.log(width, height)
-    return [width, height]
+    const NewImage = await sharp(image).toBuffer()
+    return NewImage
   } catch (error) {
     console.log(`An error occurred during processing: ${error}`)
   }
 }
 
-export default data
+const convert = async (filename : string) => {
+  const image = await promises.readFile('../../MEAN/DEFAULT/images/full/' + filename)
+  const NewImage = await sharp(image).resize(300, 300).toBuffer()
+  return NewImage
+}
+
+export { read, convert }
