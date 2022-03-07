@@ -37,7 +37,7 @@ images.get(
           res.sendFile(file)
         }
       } else {
-        res.send('WRONG NAME')
+        res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME')
       }
     }
   }
