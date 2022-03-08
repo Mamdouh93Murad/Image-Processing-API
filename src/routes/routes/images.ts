@@ -19,23 +19,31 @@ images.get(
             const file = process.cwd() + '/images/full/' + name + '.jpg'
             res.sendFile(file)
           }
+        // eslint-disable-next-line no-empty
+        } else {
+          res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME')
         }
       } else {
         if (names.includes(name)) {
-        // eslint-disable-next-line node/no-deprecated-api
-          if (promises.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) {
-            const folder : string = width as unknown as string
-            if (!promises.existsSync(process.cwd() + '/images/full/' + folder)) {
-              await promises.mkdir(process.cwd() + '/images/full/' + folder, () => { console.log('CREATED') })
+          if (width < 0 || height < 0) {
+            res.send('Size Can not be Negative, please insert positive number')
+          } else {
+            // eslint-disable-next-line node/no-deprecated-api
+            if (promises.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) {
+              const str1 : string = width as unknown as string
+              const str2 : string = height as unknown as string
+              if (!promises.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2)) {
+                await promises.mkdir(process.cwd() + '/images/full/' + str1 + 'x' + str2, () => { console.log('CREATED') })
+              }
+              if (!promises.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')) {
+                width = await Number(width)
+                height = await Number(height)
+                const image = await convert(name + '.jpg', width, height)
+                await save(image, name, str1, str2)
+              }
+              const file = process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg'
+              res.sendFile(file)
             }
-            if (!promises.existsSync(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg')) {
-              width = await Number(width)
-              height = await Number(height)
-              const image = await convert(name + '.jpg', width, height)
-              await save(image, name, folder)
-            }
-            const file = process.cwd() + '/images/full/' + folder + '/' + name + '.jpg'
-            res.sendFile(file)
           }
         } else {
           res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME')

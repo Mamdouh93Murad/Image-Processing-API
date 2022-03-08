@@ -17,7 +17,7 @@ const convert = async (filename : string, width : number, height : number) => {
   return NewImage
 }
 
-const save = (image : Buffer, name : string, folder : string) => {
-  fs.createWriteStream(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg').write(image)
+const save = async (image : Buffer, name : string, str1 : string, str2 : string) => {
+  await fs.createWriteStream(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg').write(image)
 }
 export { read, convert, save }

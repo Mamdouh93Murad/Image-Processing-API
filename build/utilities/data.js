@@ -99,7 +99,14 @@ var convert = function (filename, width, height) { return __awaiter(void 0, void
     });
 }); };
 exports.convert = convert;
-var save = function (image, name, folder) {
-    fs_1.default.createWriteStream(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg').write(image);
-};
+var save = function (image, name, str1, str2) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fs_1.default.createWriteStream(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg').write(image)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
 exports.save = save;

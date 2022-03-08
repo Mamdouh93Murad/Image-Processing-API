@@ -46,55 +46,66 @@ var data_1 = require("../../utilities/data");
 var images = express_1.default.Router();
 var names = ['encenadaport', 'fjord', 'icelandwaterfall', 'palmtunnel', 'santamonica'];
 images.get('/image', logger_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var name, width, height, file, folder, image, file;
+    var name, width, height, file, str1, str2, image, file;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 name = req.query.name;
                 width = req.query.width;
                 height = req.query.height;
-                if (!(width === undefined)) return [3 /*break*/, 3];
-                if (!names.includes(name)) return [3 /*break*/, 2];
-                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 2];
-                file = process.cwd() + '/images/full/' + name + '.jpg';
-                return [4 /*yield*/, res.sendFile(file)];
+                if (!(name !== undefined)) return [3 /*break*/, 13];
+                if (!(width === undefined)) return [3 /*break*/, 1];
+                if (names.includes(name)) {
+                    if (fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) {
+                        file = process.cwd() + '/images/full/' + name + '.jpg';
+                        res.sendFile(file);
+                    }
+                    // eslint-disable-next-line no-empty
+                }
+                else {
+                    res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
+                }
+                return [3 /*break*/, 12];
             case 1:
-                _a.sent();
-                _a.label = 2;
-            case 2: return [3 /*break*/, 14];
+                if (!names.includes(name)) return [3 /*break*/, 11];
+                if (!(width < 0 || height < 0)) return [3 /*break*/, 2];
+                res.send('Size Can not be Negative, please insert positive number');
+                return [3 /*break*/, 10];
+            case 2:
+                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 10];
+                str1 = width;
+                str2 = height;
+                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2)) return [3 /*break*/, 4];
+                return [4 /*yield*/, fs_1.default.mkdir(process.cwd() + '/images/full/' + str1 + 'x' + str2, function () { console.log('CREATED'); })];
             case 3:
-                if (!names.includes(name)) return [3 /*break*/, 13];
-                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 12];
-                folder = width;
-                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + folder)) return [3 /*break*/, 5];
-                return [4 /*yield*/, fs_1.default.mkdir(process.cwd() + '/images/full/' + folder, function () { console.log('CREATED'); })];
-            case 4:
                 _a.sent();
-                _a.label = 5;
-            case 5:
-                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + folder + '/' + name + '.jpg')) return [3 /*break*/, 10];
+                _a.label = 4;
+            case 4:
+                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')) return [3 /*break*/, 9];
                 return [4 /*yield*/, Number(width)];
-            case 6:
+            case 5:
                 width = _a.sent();
                 return [4 /*yield*/, Number(height)];
-            case 7:
+            case 6:
                 height = _a.sent();
                 return [4 /*yield*/, (0, data_1.convert)(name + '.jpg', width, height)];
-            case 8:
+            case 7:
                 image = _a.sent();
-                return [4 /*yield*/, (0, data_1.save)(image, name, folder)];
+                return [4 /*yield*/, (0, data_1.save)(image, name, str1, str2)];
+            case 8:
+                _a.sent();
+                _a.label = 9;
             case 9:
-                _a.sent();
+                file = process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg';
+                res.sendFile(file);
                 _a.label = 10;
-            case 10:
-                file = process.cwd() + '/images/full/' + folder + '/' + name + '.jpg';
-                return [4 /*yield*/, res.sendFile(file)];
+            case 10: return [3 /*break*/, 12];
             case 11:
-                _a.sent();
+                res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
                 _a.label = 12;
             case 12: return [3 /*break*/, 14];
             case 13:
-                res.send('WRONG NAME');
+                res.send('Please Specify Image name and Optionally Width and Height Value');
                 _a.label = 14;
             case 14: return [2 /*return*/];
         }
