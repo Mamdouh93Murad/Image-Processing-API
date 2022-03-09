@@ -53,8 +53,7 @@ images.get('/image', logger_1.default, function (req, res) { return __awaiter(vo
                 name = req.query.name;
                 width = req.query.width;
                 height = req.query.height;
-                if (!(name !== undefined)) return [3 /*break*/, 13];
-                if (!(width === undefined)) return [3 /*break*/, 1];
+                if (!(name !== undefined)) return [3 /*break*/, 10];
                 if (names.includes(name)) {
                     if (fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) {
                         file = process.cwd() + '/images/full/' + name + '.jpg';
@@ -65,49 +64,41 @@ images.get('/image', logger_1.default, function (req, res) { return __awaiter(vo
                 else {
                     res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
                 }
-                return [3 /*break*/, 12];
+                if (!names.includes(name)) return [3 /*break*/, 8];
+                if (!(isNaN(parseInt(width)) === true || isNaN(parseInt(height)) === true || parseInt(width) < 0 || parseInt(height) < 0)) return [3 /*break*/, 1];
+                res.send('Size Can not be Negative, string or Nan, please insert positive number');
+                return [3 /*break*/, 7];
             case 1:
-                if (!names.includes(name)) return [3 /*break*/, 11];
-                if (!(width < 0 || height < 0)) return [3 /*break*/, 2];
-                res.send('Size Can not be Negative, please insert positive number');
-                return [3 /*break*/, 10];
-            case 2:
-                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 10];
+                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 7];
                 str1 = width;
                 str2 = height;
-                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2)) return [3 /*break*/, 4];
+                if (!(!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2) && (isNaN(parseInt(width)) === false || isNaN(parseInt(height)) === false))) return [3 /*break*/, 3];
                 return [4 /*yield*/, fs_1.default.mkdir(process.cwd() + '/images/full/' + str1 + 'x' + str2, function () { console.log('CREATED'); })];
-            case 3:
+            case 2:
                 _a.sent();
-                _a.label = 4;
+                _a.label = 3;
+            case 3:
+                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')) return [3 /*break*/, 6];
+                return [4 /*yield*/, (0, data_1.convert)(name + '.jpg', parseInt(width), parseInt(height))];
             case 4:
-                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')) return [3 /*break*/, 9];
-                return [4 /*yield*/, Number(width)];
-            case 5:
-                width = _a.sent();
-                return [4 /*yield*/, Number(height)];
-            case 6:
-                height = _a.sent();
-                return [4 /*yield*/, (0, data_1.convert)(name + '.jpg', width, height)];
-            case 7:
                 image = _a.sent();
                 return [4 /*yield*/, (0, data_1.save)(image, name, str1, str2)];
-            case 8:
+            case 5:
                 _a.sent();
-                _a.label = 9;
-            case 9:
+                _a.label = 6;
+            case 6:
                 file = process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg';
                 res.sendFile(file);
-                _a.label = 10;
-            case 10: return [3 /*break*/, 12];
-            case 11:
+                _a.label = 7;
+            case 7: return [3 /*break*/, 9];
+            case 8:
                 res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
-                _a.label = 12;
-            case 12: return [3 /*break*/, 14];
-            case 13:
+                _a.label = 9;
+            case 9: return [3 /*break*/, 11];
+            case 10:
                 res.send('Please Specify Image name and Optionally Width and Height Value');
-                _a.label = 14;
-            case 14: return [2 /*return*/];
+                _a.label = 11;
+            case 11: return [2 /*return*/];
         }
     });
 }); });
