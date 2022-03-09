@@ -30,6 +30,18 @@ describe('Image Functions', (): void => {
     expect(height).toBe(1280)
   })
   // eslint-disable-next-line no-undef
+  it('Makes sure Width and Height are Positive Values', async () => {
+    // eslint-disable-next-line no-undef
+    const image = await read('fjord.jpg')
+    const metadata = await sharp(image).metadata()
+    const width: number = metadata.width as number
+    const height: number = metadata.height as number
+    // eslint-disable-next-line no-undef
+    expect(width).toBeGreaterThan(0)
+    // eslint-disable-next-line no-undef
+    expect(height).toBeGreaterThan(0)
+  })
+  // eslint-disable-next-line no-undef
   it('Returns Proper Object/File Extension', async () => {
     const image = await read('fjord.jpg')
     const metadata = await sharp(image).metadata()

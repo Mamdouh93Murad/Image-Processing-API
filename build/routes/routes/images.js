@@ -43,62 +43,74 @@ var express_1 = __importDefault(require("express"));
 var logger_1 = __importDefault(require("../../utilities/logger"));
 var fs_1 = __importDefault(require("fs"));
 var data_1 = require("../../utilities/data");
+var cli_color_1 = __importDefault(require("cli-color"));
 var images = express_1.default.Router();
 var names = ['encenadaport', 'fjord', 'icelandwaterfall', 'palmtunnel', 'santamonica'];
 images.get('/image', logger_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var name, width, height, file, str1, str2, image, file;
+    var name, width, height, file, str1, str2, image, file, file;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 name = req.query.name;
                 width = req.query.width;
                 height = req.query.height;
-                if (!(name !== undefined)) return [3 /*break*/, 10];
-                if (names.includes(name)) {
-                    if (fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) {
-                        file = process.cwd() + '/images/full/' + name + '.jpg';
-                        res.sendFile(file);
+                if (!(name !== undefined)) return [3 /*break*/, 12];
+                if (isNaN(parseInt(width)) === true && isNaN(parseInt(height)) === true) {
+                    if (names.includes(name)) {
+                        if (fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) {
+                            file = process.cwd() + '/images/full/' + name + '.jpg';
+                            res.sendFile(file);
+                        }
+                        // eslint-disable-next-line no-empty
                     }
-                    // eslint-disable-next-line no-empty
+                    else {
+                        res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
+                        console.error(cli_color_1.default.red('FILE DOES NOT EXIST, WRONG IMAGE NAME'));
+                    }
                 }
-                else {
-                    res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
-                }
-                if (!names.includes(name)) return [3 /*break*/, 8];
-                if (!(isNaN(parseInt(width)) === true || isNaN(parseInt(height)) === true || parseInt(width) < 0 || parseInt(height) < 0)) return [3 /*break*/, 1];
-                res.send('Size Can not be Negative, string or Nan, please insert positive number');
-                return [3 /*break*/, 7];
+                if (!names.includes(name)) return [3 /*break*/, 10];
+                if (!((width !== undefined && isNaN(parseInt(width)) === true) || (height !== undefined && isNaN(parseInt(height)) === true) || parseInt(width) < 1 || parseInt(height) < 1)) return [3 /*break*/, 1];
+                res.send('Size Can not be Negative, Zero, String or NaN. Please Insert Positive Number');
+                return [3 /*break*/, 9];
             case 1:
-                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 7];
+                if (!fs_1.default.existsSync(process.cwd() + '/images/full/' + name + '.jpg')) return [3 /*break*/, 9];
                 str1 = width;
                 str2 = height;
                 if (!(!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2) && (isNaN(parseInt(width)) === false || isNaN(parseInt(height)) === false))) return [3 /*break*/, 3];
-                return [4 /*yield*/, fs_1.default.mkdir(process.cwd() + '/images/full/' + str1 + 'x' + str2, function () { console.log('CREATED'); })];
+                return [4 /*yield*/, fs_1.default.mkdir(process.cwd() + '/images/full/' + str1 + 'x' + str2, function () { console.log(cli_color_1.default.green(' FOLDER CREATED')); })];
             case 2:
                 _a.sent();
                 _a.label = 3;
             case 3:
-                if (!!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')) return [3 /*break*/, 6];
+                if (!((!fs_1.default.existsSync(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')) && (isNaN(parseInt(width)) === false && isNaN(parseInt(height)) === false))) return [3 /*break*/, 6];
                 return [4 /*yield*/, (0, data_1.convert)(name + '.jpg', parseInt(width), parseInt(height))];
             case 4:
                 image = _a.sent();
                 return [4 /*yield*/, (0, data_1.save)(image, name, str1, str2)];
             case 5:
                 _a.sent();
+                console.log(cli_color_1.default.green(' IMAGE CREATED AND SAVED'));
                 _a.label = 6;
             case 6:
-                file = process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg';
+                if (!(str1 === undefined || str2 === undefined)) return [3 /*break*/, 7];
+                file = process.cwd() + '/images/full/' + name + '.jpg';
                 res.sendFile(file);
-                _a.label = 7;
-            case 7: return [3 /*break*/, 9];
+                return [3 /*break*/, 9];
+            case 7: return [4 /*yield*/, process.cwd()];
             case 8:
-                res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
+                file = (_a.sent()) + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg';
+                res.sendFile(file);
                 _a.label = 9;
             case 9: return [3 /*break*/, 11];
             case 10:
-                res.send('Please Specify Image name and Optionally Width and Height Value');
+                res.send('FILE DOES NOT EXIST, WRONG IMAGE NAME');
+                console.error(cli_color_1.default.red('FILE DOES NOT EXIST, WRONG IMAGE NAME'));
                 _a.label = 11;
-            case 11: return [2 /*return*/];
+            case 11: return [3 /*break*/, 13];
+            case 12:
+                res.send('Please Specify Image name and Optionally Width and Height Value');
+                _a.label = 13;
+            case 13: return [2 /*return*/];
         }
     });
 }); });

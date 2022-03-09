@@ -88,6 +88,27 @@ describe('Image Functions', function () {
         });
     }); });
     // eslint-disable-next-line no-undef
+    it('Makes sure Width and Height are Positive Values', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var image, metadata, width, height;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, data_1.read)('fjord.jpg')];
+                case 1:
+                    image = _a.sent();
+                    return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];
+                case 2:
+                    metadata = _a.sent();
+                    width = metadata.width;
+                    height = metadata.height;
+                    // eslint-disable-next-line no-undef
+                    expect(width).toBeGreaterThan(0);
+                    // eslint-disable-next-line no-undef
+                    expect(height).toBeGreaterThan(0);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // eslint-disable-next-line no-undef
     it('Returns Proper Object/File Extension', function () { return __awaiter(void 0, void 0, void 0, function () {
         var image, metadata;
         return __generator(this, function (_a) {

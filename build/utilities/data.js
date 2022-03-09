@@ -61,6 +61,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.save = exports.convert = exports.read = void 0;
 var sharp_1 = __importDefault(require("sharp"));
 var fs_1 = __importStar(require("fs"));
+var cli_color_1 = __importDefault(require("cli-color"));
 var read = function (filename) { return __awaiter(void 0, void 0, void 0, function () {
     var image, NewImage, error_1;
     return __generator(this, function (_a) {
@@ -77,7 +78,7 @@ var read = function (filename) { return __awaiter(void 0, void 0, void 0, functi
                 return [2 /*return*/, NewImage];
             case 4:
                 error_1 = _a.sent();
-                console.log("An error occurred during processing: ".concat(error_1));
+                console.log(cli_color_1.default.red("An error occurred during Processing Image: ".concat(error_1)));
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
@@ -85,27 +86,46 @@ var read = function (filename) { return __awaiter(void 0, void 0, void 0, functi
 }); };
 exports.read = read;
 var convert = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
-    var image, NewImage;
+    var image, NewImage, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, fs_1.promises.readFile(process.cwd() + '/images/full/' + filename)];
             case 1:
                 image = _a.sent();
-                return [4 /*yield*/, (0, sharp_1.default)(image).resize(width, height).toBuffer()];
+                _a.label = 2;
             case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, (0, sharp_1.default)(image).resize(width, height).toBuffer()];
+            case 3:
                 NewImage = _a.sent();
                 return [2 /*return*/, NewImage];
+            case 4:
+                error_2 = _a.sent();
+                console.log(cli_color_1.default.red("An error occurred during Image Conversion: ".concat(error_2)));
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
 exports.convert = convert;
 var save = function (image, name, str1, str2) { return __awaiter(void 0, void 0, void 0, function () {
+    var create, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fs_1.default.createWriteStream(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg').write(image)];
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, fs_1.default.createWriteStream(process.cwd() + '/images/full/' + str1 + 'x' + str2 + '/' + name + '.jpg')];
             case 1:
+                create = _a.sent();
+                return [4 /*yield*/, create.write(image)];
+            case 2:
                 _a.sent();
-                return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                error_3 = _a.sent();
+                console.log(cli_color_1.default.red("An error occurred during Saving Image: ".concat(error_3)));
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
